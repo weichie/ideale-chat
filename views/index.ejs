@@ -82,20 +82,11 @@
 	<script type="text/ng-template" id="/chat.html">
 		<div class="chat">
 			<ul class="chat-list">
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
-				<li><strong>Username</strong>: lorem ipsum dolor sit amet</li>
+				<li ng-repeat="msg in messages"><strong>{{ msg.author }}</strong>: {{ msg.body }}</li>
 			</ul>
 
-			<form class="form-inline">
-				<input type="email" class="form-control" id="" placeholder="Write a message">
+			<form class="form-inline" ng-submit="postMessage()">
+				<input type="text" class="form-control" ng-model="msg" id="" placeholder="Write a message">
 				<button type="submit" class="btn btn-default">Send message</button>
 			</form>
 		</div>

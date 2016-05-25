@@ -5,6 +5,7 @@ var passport = require('passport');
 var jwt = require('express-jwt');
 var Question = mongoose.model('Question');
 var Answer = mongoose.model('Answer');
+var Message = mongoose.model('Message');
 var User = mongoose.model('User');
 var Discussion = mongoose.model('Discussion');
 
@@ -18,6 +19,18 @@ router.get('/messages', function(req, res, next){
 	});
 });
 
+router.post('/message', auth, function(req,res,next){
+
+	var message = new Message(req.body);
+	message.author = req.payload.username;
+	message.owner = req.payload._id;
+
+	message.save(function(err,message){
+		if(err){ return next(err); }
+
+		res.json(message);
+	});
+});
 
 
 /* GET home page. */

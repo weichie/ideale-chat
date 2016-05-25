@@ -113,6 +113,28 @@ app.factory('auth', ['$http','$window', function($http,$window){
 	return auth;
 }]);
 
+app.factory('chat', ['$http', 'auth', function($http, auth){
+	var o = {
+		messages: []
+	};
+
+	o.getAll = function(){
+		return $http.get('/messages').success(function(data){
+			angular.copy(data,o.messages);
+		});
+	}
+
+	o.message = function(message) {
+	  return $http.post('/message', message, {
+	  	headers: {Authorization: 'Bearer ' + auth.getToken()}
+	  }).success(function(data){
+	    o.messages.push(data);
+	  });
+	};
+
+	return o;
+}]);
+
 app.factory('discussions', ['$http', 'auth', function($http, auth){
 	var o = {
 		discussions: []
@@ -647,8 +669,23 @@ app.controller('NavCtrl', ['$scope', 'auth', '$window', function($scope, auth, $
 	};
 }]);
 
-app.controller('chatCtrl', ['$scope', function($scope){
-		
+app.controller('chatCtrl', ['$scope', 'chat', '$window', function($scope, chat, $window){
+
+	chat.getAll();
+	$scope.messages = chat.messages;
+
+	$scope.postMessage = function(){
+		if(!$scope.msg || $scope.msg === '') { return; }
+
+		chat.message({
+			'body': $scope.msg,
+		});
+
+		$window.socket.emit('pushChat');
+
+		$scope.msg = '';
+	}
+
 }]);
 
 app.controller('SidebarCtrl', ['$scope', 'discussions', '$window', function($scope, discussions, $window){
@@ -758,11 +795,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			url: '/chat',
 			templateUrl: '/chat.html',
 			controller: 'chatCtrl',
-			/*onEnter: ['$state', 'auth', function($state, auth){
-				if(auth.isLoggedIn()){
-					$state.go('c');
+			onEnter: ['$state', 'auth', function($state, auth){
+				if(!auth.isLoggedIn()){
+					$state.go('home');
 				}
-			}]*/
+			}]
 		})
 		.state('register', {
 			url: '/register',

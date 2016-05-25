@@ -13,6 +13,7 @@ require('./models/Questions');
 require('./models/Answers');
 require('./models/Users');
 require('./models/Discussions');
+require('./models/Message');
 require('./config/passport');
 mongoose.connect('mongodb://localhost/chat');
 
