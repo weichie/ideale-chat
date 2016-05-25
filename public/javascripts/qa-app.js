@@ -681,6 +681,11 @@ app.controller('chatCtrl', ['$scope', 'chat', '$window', function($scope, chat, 
 			'body': $scope.msg,
 		});
 
+		$window.socket.on('pushChat', function(){
+			chat.getAll();
+			$scope.message = chat.messages;
+		});
+
 		$window.socket.emit('pushChat');
 
 		$scope.msg = '';

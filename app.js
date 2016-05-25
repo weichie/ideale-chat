@@ -66,6 +66,10 @@ nsp.on('connection', function(socket){
     console.log('got message: ' + msg);
   });
 
+  socket.on('pushChat', function(){
+    socket.broadcast.emit('pushChat');
+  });
+
   socket.on('joinDiscussion', function(data){
 
     if( socket.lastRoom ){
