@@ -699,7 +699,15 @@ app.controller('chatCtrl', ['$scope', 'chat', '$window', function($scope, chat, 
 		$window.socket.emit('pushChat');
 
 		$scope.msg = '';
+		
+		$(".chat-list").scrollTop($(".chat-list")[0].scrollHeight);
+
 	}
+
+	setInterval(function(){
+		$(".chat-list").scrollTop($(".chat-list")[0].scrollHeight)
+	}, 200);
+
 
 }]);
 
