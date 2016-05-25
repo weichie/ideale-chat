@@ -341,7 +341,7 @@ header{
 .chat{
 
 	.chat-list{
-		height: 500px;
+		min-height: 500px;
 		list-style-type: none;
 		padding: 0;
 		color: $dark-grey;
