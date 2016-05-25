@@ -647,6 +647,10 @@ app.controller('NavCtrl', ['$scope', 'auth', '$window', function($scope, auth, $
 	};
 }]);
 
+app.controller('chatCtrl', ['$scope', function($scope){
+		
+}]);
+
 app.controller('SidebarCtrl', ['$scope', 'discussions', '$window', function($scope, discussions, $window){
 	discussions.getAll();
 	$scope.discussions = discussions.discussions;
@@ -750,6 +754,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}
 			}]
 		})
+		.state('chat', {
+			url: '/chat',
+			templateUrl: '/chat.html',
+			controller: 'chatCtrl',
+			/*onEnter: ['$state', 'auth', function($state, auth){
+				if(auth.isLoggedIn()){
+					$state.go('c');
+				}
+			}]*/
+		})
 		.state('register', {
 			url: '/register',
 			templateUrl: '/register.html',
@@ -761,5 +775,5 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			}]
 		});
 
-	$urlRouterProvider.otherwise('home');
+	$urlRouterProvider.otherwise('login');
 }]);
