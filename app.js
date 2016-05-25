@@ -14,7 +14,7 @@ require('./models/Answers');
 require('./models/Users');
 require('./models/Discussions');
 require('./config/passport');
-mongoose.connect('mongodb://localhost/qa');
+mongoose.connect('mongodb://localhost/chat');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
