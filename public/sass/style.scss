@@ -331,8 +331,27 @@ header{
 			}
 		}
 	}
+}
 
+.chat{
 
+	.chat-list{
+		height: 500px;
+		list-style-type: none;
+		padding: 0;
+		color: $dark-grey;
+		font-style: italic;
+
+		strong{
+			color: #000;
+		}
+	}
+	form{
+		display: flex;
+	}
+	.form-control{
+		width: 100%;
+	}
 }
 /* FOOTER 
 ======================== */
