@@ -674,16 +674,17 @@ app.controller('chatCtrl', ['$scope', 'chat', '$window', function($scope, chat, 
 	chat.getAll();
 	$scope.messages = chat.messages;
 
+	$window.socket.on('pushChat', function(){
+		chat.getAll();
+		console.log(' got push ');
+		$scope.message = chat.messages;
+	});
+
 	$scope.postMessage = function(){
 		if(!$scope.msg || $scope.msg === '') { return; }
 
 		chat.message({
 			'body': $scope.msg,
-		});
-
-		$window.socket.on('pushChat', function(){
-			chat.getAll();
-			$scope.message = chat.messages;
 		});
 
 		$window.socket.emit('pushChat');
