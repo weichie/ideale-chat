@@ -10,6 +10,16 @@ var Discussion = mongoose.model('Discussion');
 
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
+router.get('/messages', function(req, res, next){
+	Message.find(function(err, message){
+		if(err){ return next(err); }
+
+		res.json(message);
+	});
+});
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
